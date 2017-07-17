@@ -7,6 +7,10 @@ $("document").ready(function() {
 	var $locationButton = $("#location-button");
 	var $weatherIcon = $("#weather-icon");
 	var $temperature = $("#temperature");
+	var $area = $("#area");
+	var $description = $("#description");
+	var $wind = $("#wind");
+
 
 	var urlHead = "https://fcc-weather-api.glitch.me/api/current?";
 
@@ -23,15 +27,15 @@ $("document").ready(function() {
 			type: 'GET',
 			url: weatherUrl,
 			success: function(data) {
-				$jsonStr.text(JSON.stringify(data.main));
+				// $jsonStr.text(JSON.stringify(data));
 				var weatherIconTag = "<img src='"
 							+ data.weather[0].icon
 							+ "'' alt='weather icon'>"
 				$weatherIcon.html(weatherIconTag);
 				$temperature.text(data.main.temp+" C");
-
-
-
+				$area.text(data.name);
+				$description.text(data.weather[0].description);
+				$wind.text(data.wind.speed+" knots");
 
 			},
 			error: function(jqXHR, status, err) {
