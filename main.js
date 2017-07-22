@@ -2,14 +2,18 @@ $("document").ready(function() {
 
 	var $jsonStr = $("#jsonStr");
 
-	var $side = $(".col-xs-3");
 	var $geolocation = $("#geolocation");
 	var $locationButton = $("#location-button");
 	var $weatherIcon = $("#weather-icon");
-	var $temperature = $("#temperature");
+	// var $temperature = $("#temperature");
+	var $temp = $("#temp");
+	var $tempUnit = $("#tempUnit");
 	var $area = $("#area");
 	var $description = $("#description");
 	var $wind = $("#wind");
+
+	var tempInCelsius;
+	var isUnitCelsius = true;
 
 
 	var urlHead = "https://fcc-weather-api.glitch.me/api/current?";
@@ -33,7 +37,9 @@ $("document").ready(function() {
 				// $weatherIcon.css({"height": "100px", "width": "100px"});
 				var weatherIconTag = "<img src='" + data.weather[0].icon + "'' alt='weather icon' style='width: 100%; height: 100%;'>"
 				$weatherIcon.html(weatherIconTag);
-				$temperature.text(data.main.temp+" C");
+				tempInCelsius = Math.round(data.main.temp * 10) / 10;
+				$temp.text(tempInCelsius);
+				$tempUnit.html(String.fromCharCode(176) + "<a href='#'>C</a>");
 				$area.text(data.name);
 				$description.text(data.weather[0].description);
 				$wind.text(data.wind.speed+" knots");
@@ -77,6 +83,23 @@ $("document").ready(function() {
 	// 	}
 	// }
 
+	$tempUnit.click(convertUnit);
+
+	function convertUnit() {
+		if (isUnitCelsius) {
+			$temp.text(CToF(tempInCelsius));
+			$tempUnit.html(String.fromCharCode(176)+"<a href='#'>F</a>");
+			isUnitCelsius = false;
+		} else {
+			$temp.text(tempInCelsius);
+			$tempUnit.html(String.fromCharCode(176)+"<a href='#'>C</a>");
+			isUnitCelsius = true;
+		}
+	}
+
+	function CToF(C) {
+		return Math.round((C * 1.8 + 32) * 10) / 10;
+	}
 });
 
 
