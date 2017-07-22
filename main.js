@@ -15,11 +15,13 @@ $("document").ready(function() {
 	var urlHead = "https://fcc-weather-api.glitch.me/api/current?";
 
 
-	$side.html("<br><br><br><br>").css("background-color", "blue");
+	// $side.html("<br><br><br><br>").css("background-color", "blue");
 
-	$locationButton.on("click", function() {
-		getGeolocation();
-	});
+	// $locationButton.on("click", function() {
+	// 	getGeolocation();
+	// });
+
+	getGeolocation();
 
 	function getWeather(lat, lon) {
 		var weatherUrl = urlHead + "lat=" + lat + "&lon=" + lon;
@@ -28,9 +30,8 @@ $("document").ready(function() {
 			url: weatherUrl,
 			success: function(data) {
 				// $jsonStr.text(JSON.stringify(data));
-				var weatherIconTag = "<img src='"
-							+ data.weather[0].icon
-							+ "'' alt='weather icon'>"
+				// $weatherIcon.css({"height": "100px", "width": "100px"});
+				var weatherIconTag = "<img src='" + data.weather[0].icon + "'' alt='weather icon' style='width: 100%; height: 100%;'>"
 				$weatherIcon.html(weatherIconTag);
 				$temperature.text(data.main.temp+" C");
 				$area.text(data.name);
@@ -49,7 +50,7 @@ $("document").ready(function() {
 
 	// Success callback for getGeolocation()
 	function geo_success(position) {
-		$geolocation.html("latitude: " + position.coords.latitude + "<br>longitude: " + position.coords.longitude);
+		// $geolocation.html("latitude: " + position.coords.latitude + "<br>longitude: " + position.coords.longitude);
 		getWeather(position.coords.latitude, position.coords.longitude);
 	}
 
